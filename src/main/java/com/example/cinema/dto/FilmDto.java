@@ -1,15 +1,11 @@
 package com.example.cinema.dto;
 
-import com.example.cinema.models.Categorie;
 import com.example.cinema.models.Projection;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,6 +20,6 @@ public class FilmDto {
     private String realisateur;
     private String description;
     private String photo;
-    private Categorie categorie;
+    private String categories;
     private List<Projection> projections;
 }

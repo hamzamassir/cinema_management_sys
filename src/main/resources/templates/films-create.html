@@ -1,0 +1,88 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>salles Create</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <section layout:fragment="body" class="py-5">
+        <div class="container">
+            <form role="form" method="post" th:action="@{/films/create}" th:object="${film}">
+                <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                        <label for="titre">titre</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="titre"
+                                name="titre"
+                                th:field="*{titre}"
+                                placeholder="titre">
+                        <p th:if="${#fields.hasErrors('titre')}" class="text-danger" th:errors="*{titre}"></p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Duree">Duree</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="Duree"
+                                name="Duree"
+                                th:field="*{Duree}"
+                                placeholder="Duree">
+                        <p th:if="${#fields.hasErrors('Duree')}" class="text-danger" th:errors="*{Duree}"></p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="realisateur">realisateur</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="realisateur"
+                                name="realisateur"
+                                th:field="*{realisateur}"
+                                placeholder="realisateur">
+                        <p th:if="${#fields.hasErrors('realisateur')}" class="text-danger" th:errors="*{realisateur}"></p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="description">description</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                th:field="*{description}"
+                                placeholder="description">
+                        <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="photo">photo</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="photo"
+                                name="photo"
+                                th:field="*{photo}"
+                                placeholder="photo">
+                        <p th:if="${#fields.hasErrors('photo')}" class="text-danger" th:errors="*{photo}"></p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="categories">categories</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="categories"
+                                name="categories"
+                                th:field="*{categories}"
+                                placeholder="categories">
+                        <p th:if="${#fields.hasErrors('categories')}" class="text-danger" th:errors="*{categories}"></p>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

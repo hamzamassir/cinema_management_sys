@@ -1,0 +1,43 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>salles Create</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <section layout:fragment="body" class="py-5">
+        <div class="container">
+            <form role="form" method="post" th:action="@{/salles/{cinemaId}(cinemaId=${cinemaId})}" th:object="${salle}">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Name</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                name="title"
+                                th:field="*{name}"
+                                placeholder="Event name">
+                        <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="nombrePlaces">nombrePlaces</label>
+                        <input
+                                type="number"
+                                class="form-control"
+                                id="nombrePlaces"
+                                name="nombrePlaces"
+                                th:field="*{nombrePlaces}"
+                                placeholder="nombrePlaces">
+                        <p th:if="${#fields.hasErrors('nombrePlaces')}" class="text-danger" th:errors="*{nombrePlaces}"></p>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

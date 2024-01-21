@@ -2,12 +2,13 @@ package com.example.cinema.dto;
 
 import com.example.cinema.models.Film;
 import com.example.cinema.models.Salle;
-import com.example.cinema.models.Seance;
 import com.example.cinema.models.Ticket;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -20,10 +21,12 @@ import java.util.List;
 public class ProjectionDto {
 
     private Long id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateProjection;
     private Double prix;
+    private Long salleId;
     private Salle salle;
     private Film film;
     private List<Ticket> tickets;
-    private Seance seance;
+    private String seance;
 }

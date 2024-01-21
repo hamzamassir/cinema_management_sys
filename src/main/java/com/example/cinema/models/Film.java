@@ -24,9 +24,7 @@ public class Film {
     private String realisateur;
     private String description;
     private String photo;
-    @ManyToOne
-    @JoinColumn(name = "categorie_id")
-    private Categorie categorie;
+    private String categories;
 
     @OneToMany(mappedBy = "film")
     /*@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) */ // ignore this field when we read, and dont ignore it when we write

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,18 +22,21 @@ public class Projection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateProjection;
     private Double prix;
 
+    @Transient
+    private Long salleId;  // Transient field for film ID
     @ManyToOne
     @JoinColumn(name = "salle_id")
     private Salle salle;
+
+
     @ManyToOne
     @JoinColumn(name = "film_id")
     private Film film;
     @OneToMany(mappedBy = "projection")
     private List<Ticket> tickets= new ArrayList<>();
-    @ManyToOne
-    @JoinColumn(name = "seance_id")
-    private Seance seance;
+    private String seance;
 }
