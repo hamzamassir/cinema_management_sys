@@ -1,0 +1,155 @@
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Club Create</title>
+</head>
+<body class="d-flex flex-column">
+
+<section layout:fragment="body">
+    <header class="py-5 bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center my-5">
+                <h1 class="fw-bolder" th:text="${projection.film.titre}"></h1>
+            </div>
+        </div>
+    </header>
+    <!-- Page content-->
+    <div class="container">
+        <div class="row">
+            <!-- Blog entries-->
+            <div class="col-lg-8">
+                <!-- Featured blog post-->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <img class="card-img-top rounded-3" th:src="${projection.film.photo}" alt="Film Poster">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bolder" th:text="${projection.film.titre}"></h5>
+                            <p class="card-text" th:text="${projection.film.description}"></p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <strong>Durée:</strong>
+                                    <span th:text="${projection.film.Duree}"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Réalisateur:</strong>
+                                    <span th:text="${projection.film.realisateur}"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Catégories:</strong>
+                                    <span th:text="${projection.film.categories}"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Catégories:</strong>
+                                    <span th:text="${projection.prix}"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Catégories:</strong>
+                                    <span th:text="${projection.seance}"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Catégories:</strong>
+                                    <span th:text="${projection.salle.name}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Tickets -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <!-- Display Tickets -->
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Available Tickets</h5>
+
+                                <!-- Form for selecting tickets and providing additional details -->
+                                <form th:action="@{/confirmReservation/{projectionId}(projectionId=${projection.id})}" method="post">
+                                    <!-- Iterate over tickets and create checkboxes -->
+                                    <div class="row justify-content-center">
+                                        <div th:each="ticket, iterStat : ${projection.tickets}" class="mb-2">
+                                            <div class="col-1">
+                                                <div class="form-check">
+                                                    <input type="checkbox" th:id="${'ticketCheckbox_' + ticket.id}" th:name="selectedTickets" th:value="${ticket.id}"
+                                                           class="form-check-input" th:disabled="${ticket.reserver}" />
+                                                    <label th:for="${'ticketCheckbox_' + ticket.id}" class="form-check-label"
+                                                           th:style="${ticket.reserver ? 'color: red;' : 'color: green;'}">
+                                                        Ticket ID: <span th:text="${ticket.id}"></span>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                            <!-- Add a new row after every 8 checkboxes -->
+                                            <div th:if="${iterStat.index % 8 == 7}"></div>
+                                            <!-- Alternatively, use the following line to close and reopen the row -->
+                                            <!-- <div th:if="${iterStat.index % 8 == 7}" class="w-100"></div> -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Additional fields -->
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="nomClient" class="form-label">Nom Client:</label>
+                                                <input type="text" class="form-control" id="nomClient" name="nomClient" required/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="codePayement" class="form-label">Code Payement:</label>
+                                                <input type="text" class="form-control" id="codePayement" name="codePayement" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submit button -->
+                                    <button type="submit" class="btn btn-primary">Confirm Reservation</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Other content... -->
+
+                <!-- Search widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Search</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Categories widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Categories</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#!">Road Runner</a></li>
+                                    <li><a href="#!">Trail</a></li>
+                                    <li><a href="#!">Marathon</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Side Widget</div>
+                    <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -6,12 +6,15 @@ import com.example.cinema.repository.FilmRepository;
 import com.example.cinema.repository.ProjectionRepository;
 import com.example.cinema.repository.TicketRepository;
 import com.example.cinema.service.ProjectionService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.cinema.mapper.FilmMapper.mapToFilmDto;
 import static com.example.cinema.mapper.ProjectionMapper.*;
 import static com.example.cinema.mapper.SalleMapper.mapToSalleDto;
 
@@ -51,4 +54,37 @@ public class ProjectionServiceImpl implements ProjectionService {
         List<Projection> projections = projectionRepository.findAll();
         return projections.stream().map((projection) -> mapToProjectionDto(projection)).collect(Collectors.toList());
     }
+
+    @Override
+    public ProjectionDto findProjectionById(long projectionId) {
+        Projection projection = projectionRepository.findById(projectionId).get();
+        return mapToProjectionDto(projection);
+    }
+
+    @Transactional
+    public void confirmReservation(Long projectionId, List<Long> selectedTickets, String nomClient, Integer codePayement) {
+        // Retrieve the projection
+        Projection projection = projectionRepository.findById(projectionId)
+                .orElseThrow(() -> new EntityNotFoundException("Projection not found"));
+
+        // Update the reservation status of selected tickets
+        for (Long ticketId : selectedTickets) {
+            Ticket ticket = projection.getTickets().stream()
+                    .filter(t -> t.getId().equals(ticketId))
+                    .findFirst()
+                    .orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+
+            if (!ticket.getReserver()) {
+                // Ticket is not reserved, proceed with reservation
+                ticket.setReserver(true);
+                ticket.setNomClient(nomClient);
+                ticket.setCodePayement(codePayement);
+                // Perform any additional logic as needed
+            }
+        }
+
+        // Save the updated projection
+        projectionRepository.save(projection);
+    }
 }
+

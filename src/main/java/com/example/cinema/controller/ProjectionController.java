@@ -13,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
 import static com.example.cinema.mapper.SalleMapper.*;
 
 import java.util.List;
@@ -65,5 +63,32 @@ public class ProjectionController {
         List<ProjectionDto> projections = projectionService.findAllProjections();
         model.addAttribute("projections", projections);
         return "projections-list";
+    }
+    @GetMapping("/projections/{projectionId}")
+    public String projectionDetail(@PathVariable("projectionId") long projectionId, Model model) {
+        ProjectionDto projectionDto = projectionService.findProjectionById(projectionId);
+        model.addAttribute("projection", projectionDto);
+        return "projections-detail";
+    }
+    @PostMapping("/confirmReservation/{projectionId}")
+    public String confirmReservation(@PathVariable("projectionId") Long projectionId,
+                                     @RequestParam("selectedTickets") List<Long> selectedTickets,
+                                     @RequestParam("nomClient") String nomClient,
+                                     @RequestParam("codePayement") Integer codePayement,
+                                     Model model) {
+
+        // Validate the data, perform business logic, and update the reservation status
+        // You can call a service method to handle the reservation logic
+        projectionService.confirmReservation(projectionId, selectedTickets, nomClient, codePayement);
+
+        // Set the 'projectionId' attribute in the model before redirecting
+        model.addAttribute("projectionId", projectionId);
+
+        // Redirect to the projection details page or another appropriate page
+        return "redirect:/projections/{projectionId}";
+    }
+    @GetMapping("/")
+    public String home() {
+        return "home";
     }
 }

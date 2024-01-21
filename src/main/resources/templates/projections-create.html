@@ -35,6 +35,17 @@
                         <p th:if="${#fields.hasErrors('prix')}" class="text-danger" th:errors="*{prix}"></p>
                     </div>
                     <div class="form-group col-md-6">
+                        <label for="seance">seance</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="seance"
+                                name="seance"
+                                th:field="*{seance}"
+                                placeholder="seance">
+                        <p th:if="${#fields.hasErrors('seance')}" class="text-danger" th:errors="*{seance}"></p>
+                    </div>
+                    <div class="form-group col-md-6">
                         <label for="salle">Select Salle:</label>
                         <select class="form-control" id="salle" name="salleId">
                             <option th:each="salle: ${salles}" th:value="${salle.id}" th:text="${salle.name}"></option>

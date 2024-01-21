@@ -9,4 +9,7 @@ public interface ProjectionService {
 
     List<ProjectionDto> findAllProjections();
 
+    ProjectionDto findProjectionById(long projectionId);
+
+    void confirmReservation(Long projectionId, List<Long> selectedTickets, String nomClient, Integer codePayement);
 }

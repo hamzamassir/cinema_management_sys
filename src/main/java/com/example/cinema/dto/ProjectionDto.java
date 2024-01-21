@@ -4,10 +4,7 @@ import com.example.cinema.models.Film;
 import com.example.cinema.models.Salle;
 import com.example.cinema.models.Ticket;
 import jakarta.persistence.Transient;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;

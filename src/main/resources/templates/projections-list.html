@@ -13,8 +13,7 @@
                 You are registered successfully!
             </div>-->
             <div class="text-center mb-5">
-                <h1 class="fw-bolder">Find Running Clubs</h1>
-                <p class="lead fw-normal text-muted mb-0">Groups of passionate near you</p>
+                <h1 class="fw-bolder">Projections</h1>
             </div>
             <div class="row gx-5">
                 <!--<div>
@@ -36,6 +35,13 @@
                                 <li class="list-group-item">
                                     <strong>salle:</strong>
                                     <span th:text="${projection.salle.name}"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>seance:</strong>
+                                    <span th:text="${projection.seance}"></span>
+                                </li>
+                                <li class="list-group-item">
+                                    <a class="btn btn-primary" th:href="@{/projections/{projectionId}(projectionId=${projection.id})}">Reserver</a>
                                 </li>
                             </ul>
                             <!--<a class="btn btn-primary" class="stretched-link">reserver un ticket</a>-->
