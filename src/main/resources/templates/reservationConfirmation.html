@@ -1,0 +1,32 @@
+<!-- reservationConfirmation.html -->
+<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <title>Reservation Confirmation</title>
+</head>
+<body class="d-flex flex-column">
+
+<section layout:fragment="body">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Reservation Confirmation</h5>
+                        <p>Your reservation has been confirmed successfully!</p>
+
+
+                        <!-- Link to download the ticket -->
+                        <!--<form action="/downloadTicket" method="get">
+                            <input type="hidden" name="ticketFilePath" th:value="${ticketFilePath}" />
+                            <button type="submit">Download Ticket</button>
+                        </form>-->
+                        <a class="btn btn-primary" th:href="@{/{filePath2}(filePath2=${filePath2})}">Donw</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

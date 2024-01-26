@@ -3,12 +3,15 @@ package com.example.cinema.controller;
 import com.example.cinema.dto.FilmDto;
 import com.example.cinema.dto.ProjectionDto;
 import com.example.cinema.dto.SalleDto;
+import com.example.cinema.generators.TicketPdfGenerator;
 import com.example.cinema.models.Film;
 import com.example.cinema.models.Projection;
 import com.example.cinema.models.Salle;
 import com.example.cinema.service.FilmService;
 import com.example.cinema.service.ProjectionService;
 import com.example.cinema.service.SalleService;
+import com.itextpdf.text.DocumentException;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.example.cinema.mapper.SalleMapper.*;
 
+import java.io.*;
+import java.nio.file.Files;
 import java.util.List;
 
 @Controller
@@ -77,7 +82,23 @@ public class ProjectionController {
                                      @RequestParam("codePayement") Integer codePayement,
                                      Model model) {
 
-        // Validate the data, perform business logic, and update the reservation status
+        int numberOfSelectedTickets = selectedTickets.size(); // Replace with the actual ticket code
+        /*String username = "user123"; // Replace with the actual username*/
+        ProjectionDto projection = projectionService.findProjectionById(projectionId);
+        String filePath1 = "src/main/resources/static/files/ticket"+nomClient+codePayement+".pdf";
+        projectionService.confirmReservation(projectionId, selectedTickets, nomClient, codePayement);
+        try {
+            TicketPdfGenerator pdfGenerator = new TicketPdfGenerator();
+            pdfGenerator.generateTicket(nomClient, projection.getFilm().getTitre(), codePayement, filePath1,numberOfSelectedTickets);
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+        String filePath2="files/ticket"+nomClient+codePayement+".pdf";
+        // Add the ticket file path to the model
+        model.addAttribute("filePath2", filePath2);
+
+        return "reservationConfirmation";
+        /*// Validate the data, perform business logic, and update the reservation status
         // You can call a service method to handle the reservation logic
         projectionService.confirmReservation(projectionId, selectedTickets, nomClient, codePayement);
 
@@ -85,7 +106,17 @@ public class ProjectionController {
         model.addAttribute("projectionId", projectionId);
 
         // Redirect to the projection details page or another appropriate page
-        return "redirect:/projections/{projectionId}";
+        return "redirect:/projections/{projectionId}";*/
+    }
+    /*@GetMapping("/downloadTicket")
+    public String downloadTicket( @RequestParam("ticketFilePath") String filePath) {
+
+        return "redirect:/" + filePath;
+    }*/
+
+    @GetMapping("/reservationConfirmation")
+    public String reservationConfirmations() {
+        return "reservationConfirmation";
     }
     @GetMapping("/")
     public String home() {
